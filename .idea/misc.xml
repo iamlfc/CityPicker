@@ -5,9 +5,10 @@
       <map>
         <entry key="..\:/project/mygitdemo/CityPicker/citypicker/src/main/res/drawable/bg_edit.xml" value="0.2462962962962963" />
         <entry key="..\:/project/mygitdemo/CityPicker/citypicker/src/main/res/drawable/cp_overlay_bg.xml" value="0.2462962962962963" />
+        <entry key="..\:/project/mygitdemo/CityPicker/citypicker/src/main/res/drawable/ic_5214.xml" value="0.20555555555555555" />
         <entry key="..\:/project/mygitdemo/CityPicker/citypicker/src/main/res/drawable/ic_location.xml" value="0.2760416666666667" />
         <entry key="..\:/project/mygitdemo/CityPicker/citypicker/src/main/res/layout/cp_dialog_city_picker.xml" value="0.22" />
-        <entry key="..\:/project/mygitdemo/CityPicker/citypicker/src/main/res/layout/cp_search_view.xml" value="0.19157608695652173" />
+        <entry key="..\:/project/mygitdemo/CityPicker/citypicker/src/main/res/layout/cp_search_view.xml" value="0.25" />
       </map>
     </option>
   </component>
