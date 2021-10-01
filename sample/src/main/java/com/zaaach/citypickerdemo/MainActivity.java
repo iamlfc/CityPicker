@@ -2,7 +2,6 @@ package com.zaaach.citypickerdemo;
 
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +18,8 @@ import com.zaaach.citypicker.model.LocatedCity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private TextView currentTV;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                         .enableAnimation(enable)
                         .setAnimationStyle(anim)
                         .setLocatedCity(null)
-                        .setHotCities(hotCities)
+//                        .setHotCities(hotCities)
                         .setOnPickListener(new OnPickListener() {
                             @Override
                             public void onPick(int position, City data) {
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        CityPicker.from(MainActivity.this).locateComplete(new LocatedCity("深圳", "广东", "101280601"), LocateState.SUCCESS);
+                                        CityPicker.from(MainActivity.this).locateComplete(new LocatedCity("郑州", "河南", "101180101"), LocateState.SUCCESS);
                                     }
                                 }, 3000);
                             }
