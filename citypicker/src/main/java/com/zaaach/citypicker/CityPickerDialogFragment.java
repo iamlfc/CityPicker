@@ -5,12 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,7 +18,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zaaach.citypicker.adapter.CityListAdapter;
 import com.zaaach.citypicker.adapter.InnerListener;
@@ -42,6 +39,13 @@ import com.zaaach.citypicker.view.SideIndexBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * @Author: Bro0cL
  * @Date: 2018/2/6 20:50
@@ -54,8 +58,10 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private TextView mOverlayTextView;
     private SideIndexBar mIndexBar;
     private EditText mSearchBox;
-    private TextView mCancelBtn;
+    private LinearLayout lay_location;
+    private TextView mTvLocation;
     private ImageView mClearAllBtn;
+    private RelativeLayout rl_back;
 
     private LinearLayoutManager mLayoutManager;
     private CityListAdapter mAdapter;
@@ -76,10 +82,11 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
     /**
      * 获取实例
+     *
      * @param enable 是否启用动画效果
      * @return
      */
-    public static CityPickerDialogFragment newInstance(boolean enable){
+    public static CityPickerDialogFragment newInstance(boolean enable) {
         final CityPickerDialogFragment fragment = new CityPickerDialogFragment();
         Bundle args = new Bundle();
         args.putBoolean("cp_enable_anim", enable);
@@ -93,18 +100,18 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         setStyle(STYLE_NORMAL, R.style.CityPickerStyle);
     }
 
-    public void setLocatedCity(LocatedCity location){
+    public void setLocatedCity(LocatedCity location) {
         mLocatedCity = location;
     }
 
-    public void setHotCities(List<HotCity> data){
-        if (data != null && !data.isEmpty()){
+    public void setHotCities(List<HotCity> data) {
+        if (data != null && !data.isEmpty()) {
             this.mHotCities = data;
         }
     }
 
     @SuppressLint("ResourceType")
-    public void setAnimationStyle(@StyleRes int resId){
+    public void setAnimationStyle(@StyleRes int resId) {
         this.mAnimStyle = resId <= 0 ? mAnimStyle : resId;
     }
 
@@ -120,6 +127,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         super.onViewCreated(view, savedInstanceState);
         initData();
         initViews();
+        locate();
     }
 
     private void initViews() {
@@ -138,7 +146,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 //确保定位城市能正常刷新
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mAdapter.refreshLocationItem();
                 }
             }
@@ -150,7 +158,12 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
         mEmptyView = mContentView.findViewById(R.id.cp_empty_view);
         mOverlayTextView = mContentView.findViewById(R.id.cp_overlay);
+        mTvLocation = mContentView.findViewById(R.id.tv_location);
+        lay_location = mContentView.findViewById(R.id.lay_location);
+        lay_location.setOnClickListener(this);
 
+        rl_back = mContentView.findViewById(R.id.rl_back);
+        rl_back.setOnClickListener(this);
         mIndexBar = mContentView.findViewById(R.id.cp_side_index_bar);
         mIndexBar.setNavigationBarHeight(ScreenUtil.getNavigationBarHeight(getActivity()));
         mIndexBar.setOverlayTextView(mOverlayTextView)
@@ -159,9 +172,9 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         mSearchBox = mContentView.findViewById(R.id.cp_search_box);
         mSearchBox.addTextChangedListener(this);
 
-        mCancelBtn = mContentView.findViewById(R.id.cp_cancel);
+//        mCancelBtn = mContentView.findViewById(R.id.cp_cancel);
         mClearAllBtn = mContentView.findViewById(R.id.cp_clear_all);
-        mCancelBtn.setOnClickListener(this);
+//        mCancelBtn.setOnClickListener(this);
         mClearAllBtn.setOnClickListener(this);
     }
 
@@ -184,17 +197,17 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
             mHotCities.add(new HotCity("武汉", "湖北", "101200101"));
         }
         //初始化定位城市，默认为空时会自动回调定位
-        if (mLocatedCity == null){
+        if (mLocatedCity == null) {
             mLocatedCity = new LocatedCity(getString(R.string.cp_locating), "未知", "0");
             locateState = LocateState.LOCATING;
-        }else{
+        } else {
             locateState = LocateState.SUCCESS;
         }
 
         dbManager = new DBManager(getActivity());
         mAllCities = dbManager.getAllCities();
-        mAllCities.add(0, mLocatedCity);
-        mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
+//        mAllCities.add(0, mLocatedCity);
+//        mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
         mResults = mAllCities;
     }
 
@@ -205,8 +218,8 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK){
-                    if (mOnPickListener != null){
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (mOnPickListener != null) {
                         mOnPickListener.onCancel();
                     }
                 }
@@ -228,42 +241,46 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
     //测量宽高
     private void measure() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getRealMetrics(dm);
             height = dm.heightPixels;
             width = dm.widthPixels;
-        }else{
+        } else {
             DisplayMetrics dm = getResources().getDisplayMetrics();
             height = dm.heightPixels;
             width = dm.widthPixels;
         }
     }
 
-    /** 搜索框监听 */
+    /**
+     * 搜索框监听
+     */
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
 
     @Override
     public void afterTextChanged(Editable s) {
         String keyword = s.toString();
-        if (TextUtils.isEmpty(keyword)){
+        if (TextUtils.isEmpty(keyword)) {
             mClearAllBtn.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.GONE);
             mResults = mAllCities;
-            ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+            ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
             mAdapter.updateData(mResults);
-        }else {
+        } else {
             mClearAllBtn.setVisibility(View.VISIBLE);
             //开始数据库查找
             mResults = dbManager.searchCity(keyword);
-            ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
-            if (mResults == null || mResults.isEmpty()){
+            ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+            if (mResults == null || mResults.isEmpty()) {
                 mEmptyView.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mEmptyView.setVisibility(View.GONE);
                 mAdapter.updateData(mResults);
             }
@@ -274,13 +291,22 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.cp_cancel) {
+        if (id == R.id.rl_back) {
             dismiss();
-            if (mOnPickListener != null){
+            if (mOnPickListener != null) {
                 mOnPickListener.onCancel();
             }
-        }else if(id == R.id.cp_clear_all){
+        } else if (id == R.id.cp_clear_all) {
             mSearchBox.setText("");
+        } else if (id == R.id.lay_location) {
+            if (lCity==null){
+                Toast.makeText(getContext(),"暂无定位信息！",Toast.LENGTH_LONG);
+                return;
+            }
+            dismiss();
+            if (mOnPickListener != null) {
+                mOnPickListener.onPick(-1, lCity);
+            }
         }
     }
 
@@ -291,26 +317,31 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         mAdapter.scrollToSection(index);
     }
 
-    public void locationChanged(LocatedCity location, int state){
-        mAdapter.updateLocateState(location, state);
+    private LocatedCity lCity;
+
+    public void locationChanged(LocatedCity location, int state) {
+        lCity = location;
+        mTvLocation.setText(location.getName());
+        mTvLocation.setTag(location.getCode());
+//        mAdapter.updateLocateState(location, state);
     }
 
     @Override
     public void dismiss(int position, City data) {
         dismiss();
-        if (mOnPickListener != null){
+        if (mOnPickListener != null) {
             mOnPickListener.onPick(position, data);
         }
     }
 
     @Override
-    public void locate(){
-        if (mOnPickListener != null){
+    public void locate() {
+        if (mOnPickListener != null) {
             mOnPickListener.onLocate();
         }
     }
 
-    public void setOnPickListener(OnPickListener listener){
+    public void setOnPickListener(OnPickListener listener) {
         this.mOnPickListener = listener;
     }
 }

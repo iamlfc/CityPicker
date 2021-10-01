@@ -2,10 +2,88 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
-    <include layout="@layout/cp_search_view" />
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+          android:paddingLeft="15dp"
+            android:paddingRight="20dp">
+
+            <TextView
+
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@mipmap/left_back" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dp"
+            android:text="选择城市"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:background="#F0F0F0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></TextView>
+    <include layout="@layout/cp_search_view" />
+<LinearLayout
+    android:id="@+id/lay_location"
+    android:gravity="center"
+    android:background="#fff"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:src="@drawable/ic_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ImageView>
+    <TextView
+
+        android:layout_marginLeft="7dp"
+        android:textSize="12sp"
+        android:textColor="#4B65A8"
+        android:text="当前定位："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextView>
+    <TextView
+android:id="@+id/tv_location"
+        android:textSize="12sp"
+        android:textColor="#4B65A8"
+        android:text="正在定位..."
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextView>
+</LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -32,8 +110,8 @@
             android:id="@+id/cp_side_index_bar"
             android:layout_width="@dimen/cp_index_bar_width"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
 
         <include layout="@layout/cp_empty_view"/>
     </RelativeLayout>
