@@ -4,8 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,6 +13,9 @@ import com.zaaach.citypicker.R;
 import com.zaaach.citypicker.model.City;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SectionItemDecoration extends RecyclerView.ItemDecoration {
     private List<City> mData;
@@ -30,7 +32,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
         this.mData = data;
         TypedValue typedValue = new TypedValue();
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
+        context.getTheme().resolveAttribute(R.attr.cpSectionBackgroundTitle, typedValue, true);
         mBgColor = context.getResources().getColor(typedValue.resourceId);
 
         context.getTheme().resolveAttribute(R.attr.cpSectionHeight, typedValue, true);
@@ -48,7 +50,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setColor(mTextColor);
-
+        mTextPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         mBounds = new Rect();
     }
 

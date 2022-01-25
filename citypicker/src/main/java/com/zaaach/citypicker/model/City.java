@@ -25,7 +25,7 @@ public class City {
      * 获取悬浮栏文本，（#、定位、热门 需要特殊处理）
      * @return
      */
-    public String getSection(){
+    public String getSection() {
         if (TextUtils.isEmpty(pinyin)) {
             return "#";
         } else {
@@ -36,8 +36,11 @@ public class City {
                 return c.toUpperCase();
             }
             //在添加定位和热门数据时设置的section就是‘定’、’热‘开头
-            else if (TextUtils.equals(c, "定") || TextUtils.equals(c, "热"))
+            else if (TextUtils.equals(c, "热"))
                 return pinyin;
+            else if (TextUtils.equals(c, "定"))
+                return "自动定位";
+//                return pinyin;
             else
                 return "#";
         }
