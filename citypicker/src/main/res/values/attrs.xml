@@ -28,6 +28,7 @@
     <attr name="cpSectionTextSize" format="reference" />
     <attr name="cpSectionTextColor" format="reference" />
     <attr name="cpSectionBackground" format="reference" />
+    <attr name="cpSectionBackgroundTitle" format="reference" />
 
     <attr name="cpIndexBarTextSize" format="reference" />
     <attr name="cpIndexBarNormalTextColor" format="reference" />

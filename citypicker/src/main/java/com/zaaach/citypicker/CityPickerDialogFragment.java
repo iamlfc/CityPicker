@@ -59,7 +59,8 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private SideIndexBar mIndexBar;
     private EditText mSearchBox;
     private LinearLayout lay_location;
-    private TextView mTvLocation;
+    private TextView mTv_search;
+//    private TextView mTvLocation;
     private ImageView mClearAllBtn;
     private RelativeLayout rl_back;
 
@@ -158,9 +159,12 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
         mEmptyView = mContentView.findViewById(R.id.cp_empty_view);
         mOverlayTextView = mContentView.findViewById(R.id.cp_overlay);
-        mTvLocation = mContentView.findViewById(R.id.tv_location);
+//        mTvLocation = mContentView.findViewById(R.id.tv_location);
         lay_location = mContentView.findViewById(R.id.lay_location);
         lay_location.setOnClickListener(this);
+
+        mTv_search = mContentView.findViewById(R.id.tv_search);
+        mTv_search.setOnClickListener(this);
 
         rl_back = mContentView.findViewById(R.id.rl_back);
         rl_back.setOnClickListener(this);
@@ -206,8 +210,8 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
         dbManager = new DBManager(getActivity());
         mAllCities = dbManager.getAllCities();
-//        mAllCities.add(0, mLocatedCity);
-//        mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
+        mAllCities.add(0, mLocatedCity);
+        mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
         mResults = mAllCities;
     }
 
@@ -270,6 +274,14 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         if (TextUtils.isEmpty(keyword)) {
             mClearAllBtn.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.GONE);
+        } else {
+            mClearAllBtn.setVisibility(View.VISIBLE);
+
+        }
+/*
+        if (TextUtils.isEmpty(keyword)) {
+            mClearAllBtn.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.GONE);
             mResults = mAllCities;
             ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
             mAdapter.updateData(mResults);
@@ -286,6 +298,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
             }
         }
         mRecyclerView.scrollToPosition(0);
+*/
     }
 
     @Override
@@ -298,9 +311,30 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
             }
         } else if (id == R.id.cp_clear_all) {
             mSearchBox.setText("");
+        } else if (id == R.id.tv_search) {
+            String keyword = mSearchBox.getText().toString();
+            if (TextUtils.isEmpty(keyword)) {
+                mClearAllBtn.setVisibility(View.GONE);
+                mEmptyView.setVisibility(View.GONE);
+                mResults = mAllCities;
+                ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+                mAdapter.updateData(mResults);
+            } else {
+                mClearAllBtn.setVisibility(View.VISIBLE);
+                //开始数据库查找
+                mResults = dbManager.searchCity(keyword);
+                ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+                if (mResults == null || mResults.isEmpty()) {
+                    mEmptyView.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyView.setVisibility(View.GONE);
+                    mAdapter.updateData(mResults);
+                }
+            }
+            mRecyclerView.scrollToPosition(0);
         } else if (id == R.id.lay_location) {
-            if (lCity==null){
-                Toast.makeText(getContext(),"暂无定位信息！",Toast.LENGTH_LONG);
+            if (lCity == null) {
+                Toast.makeText(getContext(), "暂无定位信息！", Toast.LENGTH_LONG);
                 return;
             }
             dismiss();
@@ -321,9 +355,9 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
     public void locationChanged(LocatedCity location, int state) {
         lCity = location;
-        mTvLocation.setText(location.getName());
-        mTvLocation.setTag(location.getCode());
-//        mAdapter.updateLocateState(location, state);
+//        mTvLocation.setText(location.getName());
+//        mTvLocation.setTag(location.getCode());
+        mAdapter.updateLocateState(location, state);
     }
 
     @Override
