@@ -92,6 +92,11 @@ public class CityPicker {
         return this;
     }
 
+    public CityPicker setIsOutData(boolean data) {
+        this.isOutData = data;
+        return this;
+    }
+
     /**
      * 启用动画效果，默认为false
      *
