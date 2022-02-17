@@ -12,13 +12,29 @@ public class City {
     private String name;
     private String province;
     private String pinyin;
-    private String code;
+    private String cityCode;//区号
+    private String adCode;//城市编号 410185
+    private String lat;//维度
+    private String lng;//精度
 
-    public City(String name, String province, String pinyin, String code) {
+    public City(String name, String province, String pinyin, String cityCode) {
         this.name = name;
         this.province = province;
         this.pinyin = pinyin;
-        this.code = code;
+        this.cityCode = cityCode;
+    }
+
+    public City(String name, String province, String pinyin, String cityCode, String adCode, String lat, String lng) {
+        this.name = name;
+        this.province = province;
+        this.pinyin = pinyin;
+        this.cityCode = cityCode;
+        this.adCode = adCode;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public City() {
     }
 
     /***
@@ -46,6 +62,30 @@ public class City {
         }
     }
 
+    public String getAdCode() {
+        return adCode == null ? "" : adCode;
+    }
+
+    public void setAdCode(String adCode) {
+        this.adCode = adCode;
+    }
+
+    public String getLat() {
+        return lat == null ? "" : lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng == null ? "" : lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
     public String getName() {
         return name;
     }
@@ -70,11 +110,11 @@ public class City {
         this.province = province;
     }
 
-    public String getCode() {
-        return code;
+    public String getCityCode() {
+        return cityCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 }

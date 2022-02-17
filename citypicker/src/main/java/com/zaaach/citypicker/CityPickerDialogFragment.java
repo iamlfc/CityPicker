@@ -60,12 +60,13 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private EditText mSearchBox;
     private LinearLayout lay_location;
     private TextView mTv_search;
-//    private TextView mTvLocation;
+    //    private TextView mTvLocation;
     private ImageView mClearAllBtn;
     private RelativeLayout rl_back;
 
     private LinearLayoutManager mLayoutManager;
     private CityListAdapter mAdapter;
+
     private List<City> mAllCities;
     private List<HotCity> mHotCities;
     private List<City> mResults;
@@ -74,7 +75,10 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
     private int height;
     private int width;
-
+    /**
+     * 是否自定义数据
+     */
+    private boolean isCustomeData = false;
     private boolean enableAnim = false;
     private int mAnimStyle = R.style.DefaultCityPickerAnimation;
     private LocatedCity mLocatedCity;
@@ -109,6 +113,17 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         if (data != null && !data.isEmpty()) {
             this.mHotCities = data;
         }
+    }
+
+    public void setAllCities(List<City> data) {
+        if (data != null && !data.isEmpty()) {
+            this.mAllCities = data;
+        }
+    }
+
+    public void setISCustomeData(boolean isOutData) {
+        this.isCustomeData = isOutData;
+
     }
 
     @SuppressLint("ResourceType")
@@ -207,9 +222,12 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         } else {
             locateState = LocateState.SUCCESS;
         }
+        if (!isCustomeData) {
+            mAllCities.clear();
+            dbManager = new DBManager(getActivity());
+            mAllCities = dbManager.getAllCities();
+        }
 
-        dbManager = new DBManager(getActivity());
-        mAllCities = dbManager.getAllCities();
         mAllCities.add(0, mLocatedCity);
         mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
         mResults = mAllCities;
@@ -321,8 +339,18 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
                 mAdapter.updateData(mResults);
             } else {
                 mClearAllBtn.setVisibility(View.VISIBLE);
-                //开始数据库查找
-                mResults = dbManager.searchCity(keyword);
+                if (!isCustomeData) {
+//开始数据库查找
+                    mResults = dbManager.searchCity(keyword);
+                } else {
+//                    内存数据筛选
+                    mResults.clear();
+                    for (City mAllCity : mAllCities) {
+                        if (mAllCity.getName().contains(keyword) || keyword.contains(mAllCity.getName()))
+                            mResults.add(mAllCity);
+                    }
+                }
+
                 ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
                 if (mResults == null || mResults.isEmpty()) {
                     mEmptyView.setVisibility(View.VISIBLE);
