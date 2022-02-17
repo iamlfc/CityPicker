@@ -45,8 +45,9 @@
 
         <item name="cpSectionHeight">@dimen/cp_section_height</item>
         <item name="cpSectionTextSize">@dimen/cp_section_text_size</item>
-        <item name="cpSectionTextColor">@color/cp_color_gray</item>
+        <item name="cpSectionTextColor">@color/cp_color_title</item>
         <item name="cpSectionBackground">@color/cp_color_section_bg</item>
+        <item name="cpSectionBackgroundTitle">@color/cp_color_section_title_bg</item>
 
         <item name="cpIndexBarTextSize">@dimen/cp_index_bar_text_size</item>
         <item name="cpIndexBarNormalTextColor">@color/cp_color_gray</item>

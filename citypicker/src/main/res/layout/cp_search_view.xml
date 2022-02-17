@@ -26,12 +26,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="请输入城市名称！"
+        android:hint="输入城市或区县名搜索！"
         android:maxLength="20"
         android:maxLines="1"
         android:textColor="#000"
-        android:textColorHint="#707070"
-        android:textSize="16sp" />
+        android:textColorHint="#999999"
+        android:textSize="15sp" />
 
     <ImageView
         android:paddingBottom="5dp"

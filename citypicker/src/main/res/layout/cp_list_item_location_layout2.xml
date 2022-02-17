@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_root_location"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
+        android:text="自动定位"
+        android:textColor="#161616"
+        android:textSize="16sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/tv_location"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正在定位..."
+        android:textColor="#727272"
+        android:textSize="15sp"></TextView>
+
+
+</LinearLayout>
