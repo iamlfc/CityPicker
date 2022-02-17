@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                         .setOnPickListener(new OnPickListener() {
                             @Override
                             public void onPick(int position, City data) {
-                                currentTV.setText(String.format("当前城市：%s，%s", data.getName(), data.getCode()));
+                                currentTV.setText(String.format("当前城市：%s，%s", data.getName(), data.getCityCode()));
                                 Toast.makeText(
                                         getApplicationContext(),
-                                        String.format("点击的数据：%s，%s", data.getName(), data.getCode()),
+                                        String.format("点击的数据：%s，%s", data.getName(), data.getCityCode()),
                                         Toast.LENGTH_SHORT)
                                         .show();
                             }
