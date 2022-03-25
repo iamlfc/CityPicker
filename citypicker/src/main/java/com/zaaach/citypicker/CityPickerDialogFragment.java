@@ -67,9 +67,9 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private LinearLayoutManager mLayoutManager;
     private CityListAdapter mAdapter;
 
-    private List<City> mAllCities;
-    private List<HotCity> mHotCities;
-    private List<City> mResults;
+    private List<City> mAllCities = new ArrayList<City>();
+    private List<HotCity> mHotCities = new ArrayList<HotCity>();
+    private List<City> mResults = new ArrayList<City>();
 
     private DBManager dbManager;
 
@@ -230,7 +230,8 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
         mAllCities.add(0, mLocatedCity);
         mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
-        mResults = mAllCities;
+        mResults.addAll(mAllCities);
+//        mResults = mAllCities;
     }
 
     @Override

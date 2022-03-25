@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arrays_sort">
+        <item>郑州</item>
+        <item>北京</item>
+        <item>上海</item>
+        <item>广州</item>
+        <item>深圳</item>
+        <item>杭州</item>
+        <item>澳门</item>
+        <item>菏泽</item>
+        <item>苏州</item>
+        <item>南京</item>
+        <item>安阳</item>
+        <item>濮阳</item>
+        <item>南阳</item>
+        <item>信阳</item>
+        <item>平顶山</item>
+        <item>连云港</item>
+        <item>珠海</item>
+        <item>兰州</item>
+        <item>天津</item>
+        <item>泰康</item>
+
+    </string-array>
+</resources>
