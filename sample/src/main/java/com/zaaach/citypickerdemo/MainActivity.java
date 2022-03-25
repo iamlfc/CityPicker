@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.promeg.pinyinhelper.Pinyin;
 import com.zaaach.citypicker.CityPicker;
 import com.zaaach.citypicker.adapter.OnPickListener;
 import com.zaaach.citypicker.model.City;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
     private static final String KEY = "current_theme";
 
-    private List<HotCity> hotCities;
+    private List<HotCity> hotCities=new ArrayList<HotCity>();
+    private List<City> list_Cities=new ArrayList<City>();
     private int anim;
     private int theme;
     private boolean enable;
@@ -52,9 +54,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         enableCB = findViewById(R.id.cb_enable_anim);
         themeBtn = findViewById(R.id.btn_style);
 
-        if (theme == R.style.DefaultCityPickerTheme){
+        if (theme == R.style.DefaultCityPickerTheme) {
             themeBtn.setText("默认主题");
-        }else if (theme == R.style.CustomTheme){
+        } else if (theme == R.style.CustomTheme) {
             themeBtn.setText("自定义主题");
         }
 
@@ -65,23 +67,25 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         themeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (themeBtn.getText().toString().startsWith("自定义")){
+                if (themeBtn.getText().toString().startsWith("自定义")) {
                     themeBtn.setText("默认主题");
                     theme = R.style.DefaultCityPickerTheme;
-                }else if (themeBtn.getText().toString().startsWith("默认")){
+                } else if (themeBtn.getText().toString().startsWith("默认")) {
                     themeBtn.setText("自定义主题");
                     theme = R.style.CustomTheme;
                 }
                 recreate();
             }
         });
-
+        initData();
         findViewById(R.id.btn_pick).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CityPicker.from(MainActivity.this)
                         .enableAnimation(enable)
                         .setAnimationStyle(anim)
+                        .setIsOutData(true)
+                        .setAllCities(list_Cities)
                         .setLocatedCity(null)
                         .setHotCities(hotCities)
                         .setOnPickListener(new OnPickListener() {
@@ -116,18 +120,44 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         });
     }
 
+    private void initData() {
+        String[] arrays = getResources().getStringArray(R.array.arrays_sort);
+        list_Cities.clear();
+        for (int index = 0; index < arrays.length; index++) {
+            City city = new City();
+            city.setName(arrays[index]);
+            city.setPinyin(Pinyin.toPinyin(city.getName(), ""));
+            list_Cities.add(city);
+        }
+     /*   var city = City()
+        city.name = it.name
+        city.adCode = it.adcode
+        city.cityCode = it.citycode
+        var listSplit = it.center.split(",")
+        if (listSplit.size == 2) {
+            city.lat = listSplit[1]
+            city.lng = listSplit[0]
+        } else {
+            city.lat = ""
+            city.lng = ""
+        }
+        city.pinyin = Pinyin.toPinyin(it.name ?:"", "")*/
+//        list_Cities.add();
+
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
+        switch (buttonView.getId()) {
             case R.id.cb_hot:
-                if (isChecked){
+                if (isChecked) {
                     hotCities = new ArrayList<>();
                     hotCities.add(new HotCity("北京", "北京", "101010100"));
                     hotCities.add(new HotCity("上海", "上海", "101020100"));
                     hotCities.add(new HotCity("广州", "广东", "101280101"));
                     hotCities.add(new HotCity("深圳", "广东", "101280601"));
                     hotCities.add(new HotCity("杭州", "浙江", "101210101"));
-                }else {
+                } else {
                     hotCities = null;
                 }
                 break;
