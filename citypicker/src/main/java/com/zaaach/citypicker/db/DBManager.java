@@ -42,19 +42,19 @@ public class DBManager {
         copyDBFile();
     }
 
-    private void copyDBFile(){
+    private void copyDBFile() {
         File dir = new File(DB_PATH);
-        if (!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
         //如果旧版数据库存在，则删除
         File dbV1 = new File(DB_PATH + DB_NAME_V1);
-        if (dbV1.exists()){
+        if (dbV1.exists()) {
             dbV1.delete();
         }
         //创建新版本数据库
         File dbFile = new File(DB_PATH + LATEST_DB_NAME);
-        if (!dbFile.exists()){
+        if (!dbFile.exists()) {
             InputStream is;
             OutputStream os;
             try {
@@ -62,7 +62,7 @@ public class DBManager {
                 os = new FileOutputStream(dbFile);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int length;
-                while ((length = is.read(buffer, 0, buffer.length)) > 0){
+                while ((length = is.read(buffer, 0, buffer.length)) > 0) {
                     os.write(buffer, 0, length);
                 }
                 os.flush();
@@ -74,34 +74,38 @@ public class DBManager {
         }
     }
 
-    public List<City> getAllCities(){
+    public List<City> getAllCities() {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
         Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
         List<City> result = new ArrayList<>();
         City city;
-        while (cursor.moveToNext()){
-            String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
-            String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
-            String pinyin = cursor.getString(cursor.getColumnIndex(COLUMN_C_PINYIN));
-            String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
-            city = new City(name, province, pinyin, code);
-            result.add(city);
+        try {
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
+                String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
+                String pinyin = cursor.getString(cursor.getColumnIndex(COLUMN_C_PINYIN));
+                String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
+                city = new City(name, province, pinyin, code);
+                result.add(city);
+            }
+            cursor.close();
+            db.close();
+            Collections.sort(result, new CityComparator());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        cursor.close();
-        db.close();
-        Collections.sort(result, new CityComparator());
         return result;
     }
 
-    public List<City> searchCity(final String keyword){
+    public List<City> searchCity(final String keyword) {
         String sql = "select * from " + TABLE_NAME + " where "
                 + COLUMN_C_NAME + " like ? " + "or "
                 + COLUMN_C_PINYIN + " like ? ";
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
-        Cursor cursor = db.rawQuery(sql, new String[]{"%"+keyword+"%", keyword+"%"});
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + keyword + "%", keyword + "%"});
 
         List<City> result = new ArrayList<>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
             String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
             String pinyin = cursor.getString(cursor.getColumnIndex(COLUMN_C_PINYIN));
@@ -119,7 +123,7 @@ public class DBManager {
     /**
      * sort by a-z
      */
-    private class CityComparator implements Comparator<City>{
+    private class CityComparator implements Comparator<City> {
         @Override
         public int compare(City lhs, City rhs) {
             String a = lhs.getPinyin().substring(0, 1);
