@@ -80,6 +80,8 @@ public class DBManager {
         List<City> result = new ArrayList<>();
         City city;
         try {
+            if (cursor.getColumnCount() == -1)
+                return result;
             while (cursor.moveToNext()) {
                 String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
                 String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
