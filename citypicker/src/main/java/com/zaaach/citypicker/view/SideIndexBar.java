@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import androidx.annotation.Nullable;
  * @Author: Bro0cL
  * @Date: 2018/2/8 10:56
  */
-public class SideIndexBar extends View{
+public class SideIndexBar extends View {
 //    private static final String[] DEFAULT_INDEX_ITEMS = {"定", "热", "A", "B", "C", "D", "E", "F", "G", "H",
 //            "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};
     private static final String[] DEFAULT_INDEX_ITEMS = {"定","热", "A", "B", "C", "D", "E", "F", "G", "H",
@@ -67,15 +66,15 @@ public class SideIndexBar extends View{
         mIndexItems = new ArrayList<>();
         mIndexItems.addAll(Arrays.asList(DEFAULT_INDEX_ITEMS));
 
-        TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.cpIndexBarTextSize, typedValue, true);
-        mTextSize = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+//        TypedValue typedValue = new TypedValue();
+//        context.getTheme().resolveAttribute(R.attr.cpIndexBarTextSize, typedValue, true);
+        mTextSize = context.getResources().getDimensionPixelSize(R.dimen.cp_index_bar_text_size);
 
-        context.getTheme().resolveAttribute(R.attr.cpIndexBarNormalTextColor, typedValue, true);
-        mTextColor = context.getResources().getColor(typedValue.resourceId);
+//        context.getTheme().resolveAttribute(R.attr.cpIndexBarNormalTextColor, typedValue, true);
+        mTextColor = context.getResources().getColor(R.color.cp_color_gray);
 
-        context.getTheme().resolveAttribute(R.attr.cpIndexBarSelectedTextColor, typedValue, true);
-        mTextTouchedColor = context.getResources().getColor(typedValue.resourceId);
+//        context.getTheme().resolveAttribute(R.attr.cpIndexBarSelectedTextColor, typedValue, true);
+        mTextTouchedColor = context.getResources().getColor(R.color.cp_color_gray_dark);
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setTextSize(mTextSize);

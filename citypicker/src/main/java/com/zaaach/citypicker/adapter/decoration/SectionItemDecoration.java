@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextPaint;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.zaaach.citypicker.R;
@@ -30,19 +29,19 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
 
     public SectionItemDecoration(Context context, List<City> data) {
         this.mData = data;
-        TypedValue typedValue = new TypedValue();
+//        TypedValue typedValue = new TypedValue();
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionBackgroundTitle, typedValue, true);
-        mBgColor = context.getResources().getColor(typedValue.resourceId);
+//        context.getTheme().resolveAttribute(R.attr.cpSectionBackgroundTitle, typedValue, true);
+        mBgColor = context.getResources().getColor(R.color.cp_color_section_title_bg);
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionHeight, typedValue, true);
-        mSectionHeight = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+//        context.getTheme().resolveAttribute(R.attr.cpSectionHeight, typedValue, true);
+        mSectionHeight = context.getResources().getDimensionPixelSize(R.dimen.cp_section_height);
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionTextSize, typedValue, true);
-        mTextSize = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+//        context.getTheme().resolveAttribute(R.attr.cpSectionTextSize, typedValue, true);
+        mTextSize = context.getResources().getDimensionPixelSize(R.dimen.cp_section_text_size);
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionTextColor, typedValue, true);
-        mTextColor = context.getResources().getColor(typedValue.resourceId);
+//        context.getTheme().resolveAttribute(R.attr.cpSectionTextColor, typedValue, true);
+        mTextColor = context.getResources().getColor(R.color.cp_color_title);
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBgPaint.setColor(mBgColor);

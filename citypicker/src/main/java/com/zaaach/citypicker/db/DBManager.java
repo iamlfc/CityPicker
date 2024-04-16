@@ -21,8 +21,8 @@ import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_CODE;
 import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_NAME;
 import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_PINYIN;
 import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_PROVINCE;
-import static com.zaaach.citypicker.db.DBConfig.LATEST_DB_NAME;
 import static com.zaaach.citypicker.db.DBConfig.DB_NAME_V1;
+import static com.zaaach.citypicker.db.DBConfig.LATEST_DB_NAME;
 import static com.zaaach.citypicker.db.DBConfig.TABLE_NAME;
 
 /**
