@@ -4,11 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.zaaach.citypicker.R;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private float dividerHeight;
@@ -17,9 +18,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     public DividerItemDecoration(Context context) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
-        mPaint.setColor(context.getResources().getColor(typedValue.resourceId));
+//        TypedValue typedValue = new TypedValue();
+//        context.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
+        mPaint.setColor(context.getResources().getColor(R.color.cp_color_section_bg));
         dividerHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, context.getResources().getDisplayMetrics());
     }
 
