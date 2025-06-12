@@ -15,6 +15,7 @@
     tools:showIn="@layout/cp_dialog_city_picker">
 
     <EditText
+
         android:gravity="center_vertical"
         android:drawablePadding="7dp"
         android:drawableLeft="@drawable/ic_search"
@@ -27,8 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:hint="输入城市或区县名搜索"
-        android:maxLength="20"
         android:maxLines="1"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
         android:textColor="#000"
         android:textColorHint="#999999"
         android:textSize="15sp" />

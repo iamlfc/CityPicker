@@ -14,8 +14,6 @@ import com.zaaach.citypicker.CityPicker;
 import com.zaaach.citypicker.adapter.OnPickListener;
 import com.zaaach.citypicker.model.City;
 import com.zaaach.citypicker.model.HotCity;
-import com.zaaach.citypicker.model.LocateState;
-import com.zaaach.citypicker.model.LocatedCity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,9 +83,12 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                         .enableAnimation(enable)
                         .setAnimationStyle(anim)
                         .setIsOutData(true)
+                        .setHintValue("请输入国家/地区名称进行搜索")
+                        .setIsTvSearch(false)
+                        .setShowLocation(false)
                         .setAllCities(list_Cities)
                         .setLocatedCity(null)
-                        .setHotCities(hotCities)
+//                        .setHotCities(hotCities)
                         .setOnPickListener(new OnPickListener() {
                             @Override
                             public void onPick(int position, City data) {
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        CityPicker.from(MainActivity.this).locateComplete(new LocatedCity("郑州", "河南", "101180101"), LocateState.SUCCESS);
+//                                        CityPicker.from(MainActivity.this).locateComplete(new LocatedCity("郑州", "河南", "101180101"), LocateState.SUCCESS);
                                     }
                                 }, 3000);
                             }
