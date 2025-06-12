@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,7 +85,9 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private LocatedCity mLocatedCity;
     private int locateState;
     private OnPickListener mOnPickListener;
-
+    private String strHint = ""; //搜索框提示语
+    private boolean isShowTvSearch = true;// 是否显示搜索按钮
+    private boolean isShowLocation = true;//是否显示定位城市
     /**
      * 获取实例
      *
@@ -124,6 +127,27 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     public void setISCustomeData(boolean isOutData) {
         this.isCustomeData = isOutData;
 
+    }
+
+
+    public void setEtInputHint(String strHint) {
+        this.strHint = strHint;
+//        if (mSearchBox != null)
+//            mSearchBox.setHint(strHint);
+
+    }
+
+
+
+    public void setIsHideSearch(boolean isShow) {
+        isShowTvSearch = isShow;
+//        if (mTv_search != null)
+//             mTv_search.setVisibility(isShow ? View.VISIBLE : View.GONE);
+
+    }
+
+    public void setShowLocation (boolean isShowLocation) {
+        this.isShowLocation = isShowLocation;
     }
 
     @SuppressLint("ResourceType")
@@ -190,7 +214,20 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
         mSearchBox = mContentView.findViewById(R.id.cp_search_box);
         mSearchBox.addTextChangedListener(this);
+        mSearchBox.setHint(strHint);
+        mSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // 执行搜索操作
+                    mTv_search.performClick();
+                    return true; // 表示事件已处理
+                }
+                return false; // 如果不是搜索按钮，返回false让系统继续处理其他操作
+            }
+        });
 
+        mTv_search.setVisibility(isShowTvSearch ? View.VISIBLE : View.GONE);
 //        mCancelBtn = mContentView.findViewById(R.id.cp_cancel);
         mClearAllBtn = mContentView.findViewById(R.id.cp_clear_all);
 //        mCancelBtn.setOnClickListener(this);
@@ -227,7 +264,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
             dbManager = new DBManager(getActivity());
             mAllCities = dbManager.getAllCities();
         }
-        if (!mAllCities.get(0).getPinyin().equals("定位城市"))
+        if (isShowLocation&&!mAllCities.get(0).getPinyin().equals("定位城市"))
             mAllCities.add(0, mLocatedCity);
         if (mHotCities.size() > 0) {
             if (!mAllCities.get(1).getPinyin().equals("热门城市"))
