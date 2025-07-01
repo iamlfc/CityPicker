@@ -413,8 +413,8 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
                     mResults.clear();
                     for (City mAllCity : mAllCities) {
                         if (isSearchWithProvice){
-                            if (mAllCity.getName().contains(keyword) || keyword.contains(mAllCity.getName())||
-                                    (mAllCity.getProvince()!=null&&!mAllCity.getProvince().isEmpty()&&(mAllCity.getProvince().contains(keyword) || keyword.contains(mAllCity.getProvince()))))
+                            if (mAllCity.getName().toLowerCase().contains(keyword) || keyword.contains(mAllCity.getName().toLowerCase())||
+                                    (mAllCity.getProvince()!=null&&!mAllCity.getProvince().isEmpty()&&(mAllCity.getProvince().toLowerCase().contains(keyword) || keyword.contains(mAllCity.getProvince().toLowerCase()))))
                                 mResults.add(mAllCity);
                         }else {
                             if (mAllCity.getName().contains(keyword) || keyword.contains(mAllCity.getName()))
