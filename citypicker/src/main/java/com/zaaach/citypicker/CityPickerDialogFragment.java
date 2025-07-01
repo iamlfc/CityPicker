@@ -227,6 +227,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         rl_back = mContentView.findViewById(R.id.rl_back);
         rl_back.setOnClickListener(this);
         mIndexBar = mContentView.findViewById(R.id.cp_side_index_bar);
+        mIndexBar.setSearchWithCode(isSearchWithProvice);
         mIndexBar.setNavigationBarHeight(ScreenUtil.getNavigationBarHeight(getActivity()));
         mIndexBar.setOverlayTextView(mOverlayTextView)
                 .setOnIndexChangedListener(this);
@@ -283,6 +284,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
             dbManager = new DBManager(getActivity());
             mAllCities = dbManager.getAllCities();
         }
+
         if (isShowLocation&&!mAllCities.get(0).getPinyin().equals("定位城市"))
             mAllCities.add(0, mLocatedCity);
         if (mHotCities.size() > 0) {
