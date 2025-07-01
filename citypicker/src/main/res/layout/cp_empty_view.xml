@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="?attr/cpEmptyText"
+        android:text="@string/cp_no_result"
         android:textSize="14sp"
         android:textColor="#666666"/>
 </LinearLayout>
