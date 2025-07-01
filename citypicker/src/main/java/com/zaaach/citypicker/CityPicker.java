@@ -30,13 +30,16 @@ public class CityPicker {
     private boolean isOutData;//是否是外部数据
     private boolean isShowTVSearch;//是否 显示搜索按钮
     private boolean isShowLocation;//是否 显示搜索按钮
+    private boolean isSearchWithCode;//是否 连带搜索
 
     private int mAnimStyle;
     private LocatedCity mLocation;
     private List<HotCity> mHotCities;
     private List<City> mCustomCities;
     private OnPickListener mOnPickListener;
-private  String strHint="";
+    private String strHint = "";
+    private String strTitle = "";
+
     private CityPicker() {
     }
 
@@ -99,16 +102,29 @@ private  String strHint="";
         this.isOutData = data;
         return this;
     }
+
     public CityPicker setIsTvSearch(boolean data) {
         this.isShowTVSearch = data;
         return this;
     }
+
     public CityPicker setShowLocation(boolean data) {
         this.isShowLocation = data;
         return this;
     }
+
     public CityPicker setHintValue(String data) {
         this.strHint = data;
+        return this;
+    }
+
+    public CityPicker setTopTitle(String data) {
+        this.strTitle = data;
+        return this;
+    }
+
+    public CityPicker setIsWithSearchCode(boolean data) {
+        this.isSearchWithCode = data;
         return this;
     }
 
@@ -148,8 +164,10 @@ private  String strHint="";
         cityPickerFragment.setHotCities(mHotCities);
         cityPickerFragment.setISCustomeData(isOutData);
         cityPickerFragment.setEtInputHint(strHint);
+        cityPickerFragment.setTopTitle(strTitle);
         cityPickerFragment.setIsHideSearch(isShowTVSearch);
         cityPickerFragment.setShowLocation(isShowLocation);
+        cityPickerFragment.setIsWithSearch(isSearchWithCode);
         cityPickerFragment.setAllCities(mCustomCities);
         cityPickerFragment.setAnimationStyle(mAnimStyle);
         cityPickerFragment.setOnPickListener(mOnPickListener);

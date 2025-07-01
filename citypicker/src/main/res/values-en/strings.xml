@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_title">search_title</string>
+    <string name="search_action">search</string>
+
+    <string name="cp_search_hint_text">请输入城市名称！</string>
+    <string name="cp_cancel">cancle</string>
+    <string name="cp_no_result">Empty Result,Try another word~</string>
+    <string name="cp_locate_failed">location  fail</string>
+    <string name="cp_locating">locationing…</string>
+
+</resources>

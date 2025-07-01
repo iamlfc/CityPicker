@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="15dp"
-            android:text="选择城市"
+            android:text="@string/select_title"
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -72,7 +72,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingRight="15dp"
-            android:text="搜索"
+            android:text="@string/search_action"
             android:textColor="#FE2B54"
             android:textSize="16sp"></TextView>
     </LinearLayout>
