@@ -61,6 +61,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private EditText mSearchBox;
     private LinearLayout lay_location;
     private TextView mTv_search;
+    private TextView mTv_title;
     //    private TextView mTvLocation;
     private ImageView mClearAllBtn;
     private RelativeLayout rl_back;
@@ -86,8 +87,11 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private int locateState;
     private OnPickListener mOnPickListener;
     private String strHint = ""; //搜索框提示语
+    private String strTitle = ""; // 顶部 标题
     private boolean isShowTvSearch = true;// 是否显示搜索按钮
     private boolean isShowLocation = true;//是否显示定位城市
+    private boolean isSearchWithProvice = false;//是否 连带 搜索
+
     /**
      * 获取实例
      *
@@ -128,7 +132,12 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         this.isCustomeData = isOutData;
 
     }
+    public void setTopTitle(String strTitle) {
+        this.strTitle = strTitle;
+//        if (mSearchBox != null)
+//            mSearchBox.setHint(strHint);
 
+    }
 
     public void setEtInputHint(String strHint) {
         this.strHint = strHint;
@@ -141,6 +150,12 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
     public void setIsHideSearch(boolean isShow) {
         isShowTvSearch = isShow;
+//        if (mTv_search != null)
+//             mTv_search.setVisibility(isShow ? View.VISIBLE : View.GONE);
+
+    }
+    public void setIsWithSearch(boolean isShow) {
+        isSearchWithProvice = isShow;
 //        if (mTv_search != null)
 //             mTv_search.setVisibility(isShow ? View.VISIBLE : View.GONE);
 
@@ -171,6 +186,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     }
 
     private void initViews() {
+
         mRecyclerView = mContentView.findViewById(R.id.cp_city_recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -201,6 +217,9 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 //        mTvLocation = mContentView.findViewById(R.id.tv_location);
         lay_location = mContentView.findViewById(R.id.lay_location);
         lay_location.setOnClickListener(this);
+
+        mTv_title = mContentView.findViewById(R.id.tv_title);
+        mTv_title.setText(strTitle);
 
         mTv_search = mContentView.findViewById(R.id.tv_search);
         mTv_search.setOnClickListener(this);
@@ -391,8 +410,15 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 //                    内存数据筛选
                     mResults.clear();
                     for (City mAllCity : mAllCities) {
-                        if (mAllCity.getName().contains(keyword) || keyword.contains(mAllCity.getName()))
-                            mResults.add(mAllCity);
+                        if (isSearchWithProvice){
+                            if (mAllCity.getName().contains(keyword) || keyword.contains(mAllCity.getName())||
+                                    (mAllCity.getProvince()!=null&&!mAllCity.getProvince().isEmpty()&&(mAllCity.getProvince().contains(keyword) || keyword.contains(mAllCity.getProvince()))))
+                                mResults.add(mAllCity);
+                        }else {
+                            if (mAllCity.getName().contains(keyword) || keyword.contains(mAllCity.getName()))
+                                mResults.add(mAllCity);
+                        }
+
                     }
                 }
 

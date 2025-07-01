@@ -62,6 +62,38 @@ public class City {
         }
     }
 
+    public String getName() {
+        return name == null ? "" : name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getProvince() {
+        return province == null ? "" : province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getPinyin() {
+        return pinyin == null ? "" : pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
+    }
+
+    public String getCityCode() {
+        return cityCode == null ? "" : cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
     public String getAdCode() {
         return adCode == null ? "" : adCode;
     }
@@ -84,37 +116,5 @@ public class City {
 
     public void setLng(String lng) {
         this.lng = lng;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPinyin() {
-        return pinyin;
-    }
-
-    public void setPinyin(String pinyin) {
-        this.pinyin = pinyin;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCityCode() {
-        return cityCode;
-    }
-
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
     }
 }

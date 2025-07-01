@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                         .setAnimationStyle(anim)
                         .setIsOutData(true)
                         .setHintValue("请输入国家/地区名称进行搜索")
+                        .setTopTitle("选择国家")
+                        .setIsWithSearchCode(true)
                         .setIsTvSearch(false)
                         .setShowLocation(false)
                         .setAllCities(list_Cities)
