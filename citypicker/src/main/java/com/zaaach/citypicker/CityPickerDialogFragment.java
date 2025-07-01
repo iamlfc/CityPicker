@@ -396,7 +396,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         } else if (id == R.id.cp_clear_all) {
             mSearchBox.setText("");
         } else if (id == R.id.tv_search) {
-            String keyword = mSearchBox.getText().toString();
+            String keyword = mSearchBox.getText().toString().toLowerCase();
             if (TextUtils.isEmpty(keyword)) {
                 mClearAllBtn.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.GONE);
