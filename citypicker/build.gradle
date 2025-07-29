@@ -6,8 +6,12 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 27
-        versionName "2.4.5"
+        versionCode 28
+        versionName "2.4.6"
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -18,6 +22,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    // 检查是否禁用分包
+    splits.abi.enable = false // 必须为false才能生成通用APK
 }
 
 dependencies {
